@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marigold Bakehouse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF5EA;
+    --panel:#F3E9D7;
+    --cocoa:#3B2A1E;
+    --cocoa-soft:#6B5645;
+    --gold:#C08A2E;
+    --rose:#A85252;
+    --line:#E4D4B8;
+    --radius:4px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--cocoa);
+    font-family:'Inter',sans-serif;
+    line-height:1.55;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    color:var(--cocoa);
+    margin:0;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+
+  /* ---- Nav ---- */
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 6vw;
+    border-bottom:1px solid var(--line);
+    position:sticky;
+    top:0;
+    background:rgba(251,245,234,0.92);
+    backdrop-filter:blur(6px);
+    z-index:50;
+  }
+  .logo{
+    font-family:'Fraunces',serif;
+    font-size:1.3rem;
+    letter-spacing:0.2px;
+  }
+  nav ul{
+    display:flex;
+    gap:32px;
+    list-style:none;
+    padding:0;
+    margin:0;
+    font-size:0.95rem;
+  }
+  nav a{text-decoration:none;border-bottom:1px solid transparent;padding-bottom:2px;transition:border-color .2s;}
+  nav a:hover{border-color:var(--gold);}
+  .nav-cta{
+    background:var(--cocoa);
+    color:var(--cream);
+    padding:9px 20px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    font-size:0.9rem;
+  }
+  @media (max-width:760px){ nav ul{display:none;} }
+
+  /* ---- Hero ---- */
+  .hero{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    align-items:center;
+    gap:48px;
+    padding:9vh 6vw 8vh;
+    max-width:1240px;
+    margin:0 auto;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem,4.6vw,3.6rem);
+    line-height:1.08;
+    max-width:11ch;
+  }
+  .hero p.lede{
+    max-width:42ch;
+    color:var(--cocoa-soft);
+    font-size:1.05rem;
+    margin-top:22px;
+  }
+  .hero-meta{
+    display:flex;
+    gap:28px;
+    margin-top:34px;
+    font-size:0.85rem;
+    color:var(--cocoa-soft);
+  }
+  .hero-meta strong{display:block;color:var(--cocoa);font-family:'Fraunces',serif;font-size:1.1rem;font-weight:500;}
+  .btn-primary{
+    display:inline-block;
+    margin-top:32px;
+    background:var(--gold);
+    color:var(--cream);
+    padding:13px 26px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    font-size:0.95rem;
+    font-weight:500;
+  }
+
+  .hero-art{
+    aspect-ratio:1/1.05;
+    border-radius:8px;
+    background:linear-gradient(155deg,#E8C77E 0%,#C8923F 45%,#8B5A2E 100%);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-art svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+  }
+  .hero-art::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(200deg, rgba(59,42,30,0) 45%, rgba(59,42,30,0.5) 100%);
+  }
+  .hero-art .tag{
+    position:absolute;
+    bottom:20px;
+    left:20px;
+    background:var(--cream);
+    color:var(--cocoa);
+    padding:10px 16px;
+    border-radius:4px;
+    font-size:0.85rem;
+  }
+
+  /* ---- Section shell ---- */
+  section{padding:8vh 6vw;max-width:1240px;margin:0 auto;}
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    margin-bottom:44px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:20px;
+  }
+  .section-head h2{font-size:clamp(1.7rem,2.6vw,2.2rem);}
+  .section-head p{color:var(--cocoa-soft);max-width:40ch;font-size:0.95rem;}
+
+  /* ---- Menu grid ---- */
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .menu-item{
+    background:var(--cream);
+    padding:30px 26px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .item-photo{
+    width:100%;
+    height:150px;
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .item-photo svg{width:78%;height:78%;}
+  .menu-item h3{font-size:1.15rem;font-weight:500;}
+  .menu-item .desc{color:var(--cocoa-soft);font-size:0.9rem;flex-grow:1;}
+  .menu-item .price{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+    font-size:0.9rem;
+  }
+  .price .amount{font-family:'Fraunces',serif;font-size:1.1rem;}
+
+  /* ---- Story ---- */
+  .story{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:56px;
+    align-items:center;
+  }
+  .story-figure{
+    background:var(--panel);
+    border-radius:8px;
+    padding:36px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+  .story-stat strong{
+    font-family:'Fraunces',serif;
+    font-size:2.1rem;
+    font-weight:500;
+    display:block;
+  }
+  .story-stat span{font-size:0.85rem;color:var(--cocoa-soft);}
+  .story-text p{color:var(--cocoa-soft);margin-bottom:16px;}
+  @media (max-width:800px){ .story,.hero{grid-template-columns:1fr;} }
+
+  .story-gallery{
+    display:grid;
+    grid-template-columns:1.2fr 1fr 1fr;
+    gap:10px;
+    margin-top:52px;
+  }
+  .story-gallery img, .gallery-tile{
+    width:100%;
+    height:230px;
+    object-fit:cover;
+    border-radius:6px;
+  }
+  .gallery-tile{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .gallery-tile svg{width:70%;height:70%;}
+  @media (max-width:700px){ .story-gallery{grid-template-columns:1fr 1fr;} .story-gallery img:first-child,.story-gallery .gallery-tile:first-child{grid-column:span 2;} }
+
+  /* ---- Visit ---- */
+  .visit{
+    background:var(--cocoa);
+    color:var(--cream);
+    border-radius:8px;
+    padding:52px 6vw;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:32px;
+  }
+  .visit h3{color:var(--cream);font-size:1.1rem;margin-bottom:10px;}
+  .visit p{color:#D9CBB5;font-size:0.9rem;margin:0;}
+  @media (max-width:760px){ .visit{grid-template-columns:1fr;} }
+
+  footer{
+    padding:30px 6vw 50px;
+    text-align:center;
+    color:var(--cocoa-soft);
+    font-size:0.85rem;
+  }
+
+  /* ================= Chat Widget ================= */
+  #chat-toggle{
+    position:fixed;
+    bottom:26px;
+    right:26px;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:var(--cocoa);
+    border:none;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 8px 24px rgba(59,42,30,0.35);
+    z-index:100;
+    transition:transform .15s;
+  }
+  #chat-toggle:hover{transform:scale(1.05);}
+  #chat-toggle svg{width:26px;height:26px;}
+
+  #chat-panel{
+    position:fixed;
+    bottom:100px;
+    right:26px;
+    width:380px;
+    max-width:90vw;
+    height:560px;
+    max-height:76vh;
+    background:var(--cream);
+    border-radius:14px;
+    box-shadow:0 20px 60px rgba(59,42,30,0.28);
+    display:none;
+    flex-direction:column;
+    overflow:hidden;
+    z-index:100;
+    border:1px solid var(--line);
+  }
+  #chat-panel.open{display:flex;}
+
+  .chat-header{
+    background:var(--cocoa);
+    color:var(--cream);
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .chat-avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),#8B5A2E);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1rem;
+    color:var(--cream);
+    position:relative;
+  }
+  .chat-avatar::after{
+    content:"";
+    position:absolute;
+    bottom:-1px;
+    right:-1px;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#4CAF6D;
+    border:2px solid var(--cocoa);
+  }
+  .chat-header-text{flex:1;min-width:0;}
+  .chat-header .title{font-family:'Fraunces',serif;font-size:1rem;line-height:1.2;}
+  .chat-header .subtitle{font-size:0.72rem;color:#D9CBB5;margin-top:2px;}
+  .chat-header button{
+    background:none;
+    border:none;
+    color:var(--cream);
+    font-size:1.3rem;
+    cursor:pointer;
+    line-height:1;
+    padding:4px;
+    flex-shrink:0;
+  }
+
+  #chat-messages{
+    flex:1;
+    overflow-y:auto;
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    background:var(--cream);
+  }
+  .msg{
+    max-width:82%;
+    padding:10px 14px;
+    border-radius:12px;
+    font-size:0.9rem;
+    line-height:1.4;
+  }
+  .msg.bot{
+    background:var(--panel);
+    align-self:flex-start;
+    border-bottom-left-radius:2px;
+  }
+  .msg.user{
+    background:var(--gold);
+    color:#fff;
+    align-self:flex-end;
+    border-bottom-right-radius:2px;
+  }
+  .msg.typing{
+    background:var(--panel);
+    align-self:flex-start;
+    font-style:italic;
+    color:var(--cocoa-soft);
+  }
+
+  /* Product card carousel (bot sends structured "cards" data) */
+  .card-row{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding-bottom:4px;
+    align-self:flex-start;
+    max-width:100%;
+    scroll-snap-type:x mandatory;
+  }
+  .card-row::-webkit-scrollbar{height:5px;}
+  .card-row::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+  .product-card{
+    flex:0 0 190px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    scroll-snap-align:start;
+    display:flex;
+    flex-direction:column;
+  }
+  .product-card .pc-image{
+    width:100%;
+    height:100px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2.4rem;
+  }
+  .product-card .pc-body{padding:10px 12px 12px;}
+  .product-card h4{
+    font-family:'Fraunces',serif;
+    font-size:0.95rem;
+    font-weight:500;
+    margin:0 0 6px;
+    color:var(--cocoa);
+  }
+  .product-card .pc-prices{
+    font-size:0.78rem;
+    color:var(--cocoa-soft);
+    line-height:1.5;
+    margin-bottom:10px;
+  }
+  .product-card .pc-prices div{display:flex;justify-content:space-between;}
+  .product-card button{
+    width:100%;
+    background:var(--panel);
+    border:none;
+    border-radius:6px;
+    padding:8px 0;
+    font-family:'Inter',sans-serif;
+    font-size:0.85rem;
+    font-weight:600;
+    color:var(--cocoa);
+    cursor:pointer;
+    transition:background .15s;
+  }
+  .product-card button:hover{background:var(--gold);color:#fff;}
+
+  /* Quick-reply chips */
+  .quick-replies{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-self:flex-start;
+    max-width:100%;
+  }
+  .quick-reply{
+    background:#fff;
+    border:1px solid var(--gold);
+    color:var(--gold);
+    border-radius:16px;
+    padding:7px 14px;
+    font-size:0.82rem;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    transition:background .15s,color .15s;
+  }
+  .quick-reply:hover{background:var(--gold);color:#fff;}
+
+  #chat-form{
+    display:flex;
+    border-top:1px solid var(--line);
+    padding:10px;
+    gap:8px;
+    background:var(--cream);
+  }
+  #chat-input{
+    flex:1;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 12px;
+    font-family:'Inter',sans-serif;
+    font-size:0.9rem;
+    background:#fff;
+  }
+  #chat-input:focus{outline:2px solid var(--gold);outline-offset:1px;}
+  #chat-send{
+    background:var(--cocoa);
+    color:var(--cream);
+    border:none;
+    border-radius:8px;
+    padding:0 16px;
+    cursor:pointer;
+    font-size:0.9rem;
+  }
+  #chat-send:disabled{opacity:0.5;cursor:default;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Marigold Bakehouse</div>
+  <nav>
+    <ul>
+      <li><a href="#menu">Today's Bakes</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+  </nav>
+  <a class="nav-cta" href="#chat" onclick="document.getElementById('chat-toggle').click(); return false;">Ask us anything</a>
+</header>
+
+<section class="hero">
+  <div>
+    <h1>Baked before sunrise, gone by noon.</h1>
+    <p class="lede">A small-batch bakehouse on a corner in Koregaon Park, turning out sourdough, laminated pastry, and spiced buns every single morning — nothing frozen, nothing held over.</p>
+    <div class="hero-meta">
+      <div><strong>5:30 AM</strong>First loaves out</div>
+      <div><strong>12 years</strong>On the same corner</div>
+      <div><strong>7</strong>Bakes on rotation</div>
+    </div>
+    <a class="btn-primary" href="#menu">See today's menu</a>
+  </div>
+  <div class="hero-art">
+    <svg viewBox="0 0 400 420" preserveAspectRatio="xMidYMid slice">
+      <path d="M120 95 q-10 -20 0 -35 q10 15 0 35" stroke="#FBF5EA" stroke-width="4" fill="none" opacity="0.45" stroke-linecap="round"/>
+      <path d="M150 90 q-10 -18 0 -32 q10 14 0 32" stroke="#FBF5EA" stroke-width="4" fill="none" opacity="0.35" stroke-linecap="round"/>
+      <ellipse cx="135" cy="152" rx="55" ry="13" fill="#3B2417" opacity="0.2"/>
+      <path d="M85 112 h100 l-10 58 a10 10 0 0 1 -10 8 h-60 a10 10 0 0 1 -10 -8 Z" fill="#FBF5EA"/>
+      <path d="M185 122 q28 0 24 28 q-4 20 -26 18" fill="none" stroke="#FBF5EA" stroke-width="7"/>
+      <path d="M115 268 Q135 205 205 200 Q265 195 288 240 Q252 224 218 232 Q234 260 270 273 Q222 286 182 267 Q152 296 115 268 Z" fill="#F3E4C4"/>
+      <path d="M165 232 L182 253 M192 224 L208 247 M218 226 L231 249 M244 233 L256 254" stroke="#8B5A2E" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+      <circle cx="305" cy="305" r="4" fill="#F3E4C4" opacity="0.8"/>
+      <circle cx="326" cy="326" r="3" fill="#F3E4C4" opacity="0.7"/>
+      <circle cx="85" cy="325" r="3" fill="#F3E4C4" opacity="0.7"/>
+    </svg>
+    <span class="tag">Fresh crumb, daily</span>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="section-head">
+    <h2>Today's bakes</h2>
+    <p>The board changes with the season and the flour delivery — this is what's coming out of the oven this week.</p>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <div class="item-photo" style="background:linear-gradient(160deg,#F3E4C4,#E4D4B8);">
+        <svg viewBox="0 0 160 120">
+          <ellipse cx="80" cy="68" rx="55" ry="36" fill="#D9A85C"/>
+          <path d="M40 53 Q80 30 120 53" stroke="#8B5A2E" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M45 68 Q80 48 115 68" stroke="#8B5A2E" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M50 83 Q80 66 110 83" stroke="#8B5A2E" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="58" cy="42" r="2" fill="#FBF5EA" opacity="0.7"/>
+          <circle cx="90" cy="38" r="1.6" fill="#FBF5EA" opacity="0.7"/>
+          <circle cx="106" cy="48" r="1.8" fill="#FBF5EA" opacity="0.6"/>
+        </svg>
+      </div>
+      <h3>Country Sourdough Boule</h3>
+      <p class="desc">72-hour cold ferment, dark bake, open crumb. Whole and half loaves.</p>
+      <div class="price"><span>Half / Whole</span><span class="amount">₹140 / ₹260</span></div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-photo" style="background:linear-gradient(160deg,#F3E4C4,#E4D4B8);">
+        <svg viewBox="0 0 160 120">
+          <circle cx="80" cy="65" r="40" fill="#C08A2E"/>
+          <path d="M80 65 m0 -26 a26 26 0 1 1 -18.4 44.4" stroke="#6E4423" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M80 65 m0 -15 a15 15 0 1 1 -10.6 25.6" stroke="#6E4423" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <circle cx="80" cy="65" r="4" fill="#6E4423"/>
+          <path d="M45 35 q6 -10 14 -4" stroke="#FBF5EA" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.85"/>
+          <path d="M105 32 q8 -6 12 4" stroke="#FBF5EA" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.85"/>
+        </svg>
+      </div>
+      <h3>Cardamom Morning Buns</h3>
+      <p class="desc">Laminated dough, brown-sugar cardamom filling, rolled and glazed.</p>
+      <div class="price"><span>Each</span><span class="amount">₹95</span></div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-photo" style="background:linear-gradient(160deg,#F3E4C4,#E4D4B8);">
+        <svg viewBox="0 0 160 120">
+          <path d="M30 78 Q40 42 82 37 Q124 32 133 62 Q112 51 90 56 Q101 72 122 80 Q90 88 64 78 Q45 92 30 78 Z" fill="#C8923F"/>
+          <path d="M56 52 L67 65" stroke="#8B5A2E" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M72 48 L82 62" stroke="#8B5A2E" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M88 49 L97 64" stroke="#8B5A2E" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M103 54 L111 68" stroke="#8B5A2E" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Brown Butter Croissant</h3>
+      <p class="desc">Slow-laminated, baked in small batches twice a day.</p>
+      <div class="price"><span>Each</span><span class="amount">₹110</span></div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-photo" style="background:linear-gradient(160deg,#F3E4C4,#E4D4B8);">
+        <svg viewBox="0 0 160 120">
+          <rect x="28" y="42" width="104" height="52" rx="18" fill="#8B5A2E"/>
+          <path d="M48 48 L58 90 M78 42 L85 92 M104 45 L112 88" stroke="#6E4423" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+          <circle cx="53" cy="58" r="3" fill="#3B2417"/>
+          <circle cx="95" cy="63" r="3" fill="#3B2417"/>
+          <circle cx="73" cy="70" r="2.5" fill="#A85252"/>
+          <circle cx="112" cy="56" r="2.5" fill="#A85252"/>
+        </svg>
+      </div>
+      <h3>Fig & Walnut Loaf</h3>
+      <p class="desc">Dense rye-wheat blend, dried fig, toasted walnut. Keeps well.</p>
+      <div class="price"><span>Loaf</span><span class="amount">₹220</span></div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-photo" style="background:linear-gradient(160deg,#F3E4C4,#E4D4B8);">
+        <svg viewBox="0 0 160 120">
+          <ellipse cx="80" cy="68" rx="58" ry="30" fill="#E8C77E"/>
+          <circle cx="55" cy="58" r="4" fill="#C8923F"/>
+          <circle cx="75" cy="78" r="4" fill="#C8923F"/>
+          <circle cx="95" cy="56" r="4" fill="#C8923F"/>
+          <circle cx="110" cy="76" r="4" fill="#C8923F"/>
+          <circle cx="65" cy="43" r="1.5" fill="#fff"/>
+          <circle cx="90" cy="88" r="1.5" fill="#fff"/>
+          <circle cx="120" cy="58" r="1.5" fill="#fff"/>
+          <path d="M40 53 q-6 -8 2 -14 q4 8 -2 14 Z" fill="#6B8E4E"/>
+          <path d="M130 63 q6 -8 -2 -14 q-4 8 2 14 Z" fill="#6B8E4E"/>
+        </svg>
+      </div>
+      <h3>Sea Salt Focaccia</h3>
+      <p class="desc">Rosemary, olive oil, flaky salt. Sold by the tray slice.</p>
+      <div class="price"><span>Slice</span><span class="amount">₹85</span></div>
+    </div>
+
+    <div class="menu-item">
+      <div class="item-photo" style="background:linear-gradient(160deg,#F3E4C4,#E4D4B8);">
+        <svg viewBox="0 0 160 120">
+          <path d="M38 88 Q53 38 80 88 Q107 38 122 88" stroke="#6E4423" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <path d="M44 86 Q57 48 80 84 Q103 48 116 86" stroke="#C08A2E" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.65"/>
+          <path d="M52 78 Q60 58 80 76" stroke="#3B2417" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <path d="M108 78 Q100 58 80 76" stroke="#3B2417" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+      </div>
+      <h3>Dark Chocolate Babka</h3>
+      <p class="desc">Twisted, twice-proofed, finished with a sugar syrup brush.</p>
+      <div class="price"><span>Each</span><span class="amount">₹150</span></div>
+    </div>
+
+  </div>
+</section>
+
+<section id="story">
+  <div class="story">
+    <div class="story-figure">
+      <div class="story-stat"><strong>2014</strong><span>Started as a two-person kitchen</span></div>
+      <div class="story-stat"><strong>4</strong><span>Bakers on the floor each morning</span></div>
+      <div class="story-stat"><strong>1</strong><span>Sourdough starter, still going</span></div>
+    </div>
+    <div class="story-text">
+      <h2 style="margin-bottom:18px;">Why we only bake mornings</h2>
+      <p>We started with one oven and a starter that's now old enough to have a name. The rule hasn't changed since: bake what sells that day, and stop when it's gone.</p>
+      <p>That means shorter hours than most bakeries, and an empty shelf by early afternoon — but every loaf that leaves the counter was mixed, proofed, and baked within the same twelve hours.</p>
+    </div>
+  </div>
+  <div class="story-gallery">
+    <div class="gallery-tile" style="background:linear-gradient(160deg,#8B5A2E,#6E4423);">
+      <svg viewBox="0 0 200 160">
+        <rect x="20" y="30" width="160" height="10" fill="#3B2417" opacity="0.4"/>
+        <rect x="20" y="90" width="160" height="10" fill="#3B2417" opacity="0.4"/>
+        <ellipse cx="55" cy="55" rx="26" ry="16" fill="#D9A85C"/>
+        <ellipse cx="105" cy="55" rx="22" ry="15" fill="#E8C77E"/>
+        <ellipse cx="150" cy="58" rx="20" ry="14" fill="#C08A2E"/>
+        <ellipse cx="45" cy="112" rx="24" ry="15" fill="#C08A2E"/>
+        <ellipse cx="95" cy="115" rx="26" ry="16" fill="#D9A85C"/>
+        <ellipse cx="145" cy="112" rx="22" ry="14" fill="#E8C77E"/>
+      </svg>
+    </div>
+    <div class="gallery-tile" style="background:linear-gradient(160deg,#F3E4C4,#E4D4B8);">
+      <svg viewBox="0 0 200 160">
+        <path d="M30 130 L30 60 Q100 30 170 60 L170 130 Z" fill="none" stroke="#8B5A2E" stroke-width="3" opacity="0.5"/>
+        <ellipse cx="70" cy="95" rx="20" ry="13" fill="#D9A85C"/>
+        <ellipse cx="115" cy="88" rx="18" ry="12" fill="#C08A2E"/>
+        <ellipse cx="150" cy="100" rx="16" ry="11" fill="#E8C77E"/>
+        <rect x="45" y="118" width="110" height="6" fill="#8B5A2E" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="gallery-tile" style="background:linear-gradient(160deg,#A85252,#8B5A2E);">
+      <svg viewBox="0 0 200 160">
+        <path d="M60 130 L60 70 L140 70 L140 130 Z" fill="#F3E4C4"/>
+        <path d="M60 70 L100 40 L140 70 Z" fill="#E8C77E"/>
+        <rect x="60" y="95" width="80" height="6" fill="#C08A2E"/>
+        <circle cx="100" cy="55" r="5" fill="#A85252"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="visit">
+    <div>
+      <h3>Hours</h3>
+      <p>Tue – Sun, 7:00 AM – 2:00 PM<br>Closed Mondays</p>
+    </div>
+    <div>
+      <h3>Address</h3>
+      <p>14 Lane 6, Koregaon Park<br>Pune, Maharashtra</p>
+    </div>
+    <div>
+      <h3>Orders</h3>
+      <p>Walk-in only for single items.<br>Pre-order for full loaves and trays.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Marigold Bakehouse — demo site built for a chatbot integration walkthrough.
+</footer>
+
+<!-- ================= Chat Widget ================= -->
+<button id="chat-toggle" aria-label="Open chat">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#FBF5EA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+  </svg>
+</button>
+
+<div id="chat-panel">
+  <div class="chat-header">
+    <div class="chat-avatar">M</div>
+    <div class="chat-header-text">
+      <div class="title">Marigold Order Bot</div>
+      <div class="subtitle">Typically replies instantly</div>
+    </div>
+    <button id="chat-close" aria-label="Close chat">&times;</button>
+  </div>
+  <div id="chat-messages">
+    <div class="msg bot">Hi! I'm the Marigold order assistant. Want to see today's cakes, check hours, or place a pre-order?</div>
+    <div class="quick-replies">
+      <button type="button" class="quick-reply" data-text="Show me today's cakes">Today's cakes</button>
+      <button type="button" class="quick-reply" data-text="What are your hours?">Hours</button>
+      <button type="button" class="quick-reply" data-text="I want to place an order">Place an order</button>
+    </div>
+  </div>
+  <form id="chat-form">
+    <input id="chat-input" type="text" placeholder="Type a message…" autocomplete="off" />
+    <button id="chat-send" type="submit">Send</button>
+  </form>
+</div>
+
+<script>
+  // ----------------------------------------------------------------
+  // n8n webhook endpoint — replace with your Production URL once the
+  // workflow is active (see the setup instructions accompanying this file).
+  // ----------------------------------------------------------------
+  const N8N_WEBHOOK_URL = "https://YOUR-N8N-INSTANCE/webhook/marigold-chat";
+
+  const toggle   = document.getElementById('chat-toggle');
+  const panel    = document.getElementById('chat-panel');
+  const closeBtn = document.getElementById('chat-close');
+  const form     = document.getElementById('chat-form');
+  const input    = document.getElementById('chat-input');
+  const sendBtn  = document.getElementById('chat-send');
+  const messages = document.getElementById('chat-messages');
+
+  toggle.addEventListener('click', () => panel.classList.toggle('open'));
+  closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+
+  // Stable session id per browser, so n8n can keep conversation memory
+  // tied to this visitor across messages.
+  function getSessionId(){
+    let id = localStorage.getItem('marigold_session_id');
+    if(!id){
+      id = 'sess_' + Math.random().toString(36).slice(2) + Date.now();
+      localStorage.setItem('marigold_session_id', id);
+    }
+    return id;
+  }
+
+  function addMessage(text, sender){
+    const el = document.createElement('div');
+    el.className = 'msg ' + sender;
+    el.textContent = text;
+    messages.appendChild(el);
+    messages.scrollTop = messages.scrollHeight;
+    return el;
+  }
+
+  function addTyping(){
+    const el = document.createElement('div');
+    el.className = 'msg typing';
+    el.textContent = 'Typing…';
+    messages.appendChild(el);
+    messages.scrollTop = messages.scrollHeight;
+    return el;
+  }
+
+  // Renders a horizontally-scrolling row of product cards.
+  // Expects: [{ image?, emoji?, color?, title, prices: [{label, price}], choiceText }]
+  // "image" is optional — if omitted (or if it fails to load), an emoji tile is shown instead,
+  // so the widget never depends on an external photo being reachable.
+  function addCards(cards){
+    const row = document.createElement('div');
+    row.className = 'card-row';
+    cards.forEach(card => {
+      const el = document.createElement('div');
+      el.className = 'product-card';
+      const priceLines = (card.prices || [])
+        .map(p => `<div><span>${p.label}</span><span>${p.price}</span></div>`)
+        .join('');
+      const tileStyle = `background:${card.color || 'linear-gradient(135deg,#E8C77E,#8B5A2E)'};`;
+      const imageHtml = card.image
+        ? `<img class="pc-image" src="${card.image}" alt="${card.title}" style="object-fit:cover;" onerror="this.outerHTML='<div class=&quot;pc-image&quot; style=&quot;${tileStyle}&quot;>${card.emoji || '🍰'}</div>'">`
+        : `<div class="pc-image" style="${tileStyle}">${card.emoji || '🍰'}</div>`;
+      el.innerHTML = `
+        ${imageHtml}
+        <div class="pc-body">
+          <h4>${card.title}</h4>
+          <div class="pc-prices">${priceLines}</div>
+          <button type="button">Choose 🍰</button>
+        </div>`;
+      el.querySelector('button').addEventListener('click', () => {
+        sendMessage(card.choiceText || `Choose ${card.title}`);
+      });
+      row.appendChild(el);
+    });
+    messages.appendChild(row);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  // Renders quick-reply chips. Clicking one sends its text as a user message.
+  function addQuickReplies(options){
+    const row = document.createElement('div');
+    row.className = 'quick-replies';
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'quick-reply';
+      btn.textContent = opt;
+      btn.addEventListener('click', () => sendMessage(opt));
+      row.appendChild(btn);
+    });
+    messages.appendChild(row);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  // Wire up the three starter quick-replies already in the markup.
+  messages.querySelectorAll('.quick-reply[data-text]').forEach(btn => {
+    btn.addEventListener('click', () => sendMessage(btn.dataset.text));
+  });
+
+  async function sendMessage(text){
+    if(!text) return;
+    addMessage(text, 'user');
+    sendBtn.disabled = true;
+    const typingEl = addTyping();
+
+    // DEMO MODE: while N8N_WEBHOOK_URL is still the placeholder, simulate a
+    // reply locally so you can see the card/quick-reply UI immediately.
+    // Delete this whole "if" block once your n8n webhook URL is set below.
+    if (N8N_WEBHOOK_URL.includes('YOUR-N8N-INSTANCE')) {
+      setTimeout(() => {
+        typingEl.remove();
+        if (/cake/i.test(text)) {
+          addMessage("Here's what we have today:", 'bot');
+          addCards([
+            {
+              emoji: '🍫',
+              color: 'linear-gradient(135deg,#8B5A2E,#3B2417)',
+              title: 'Dark Chocolate Babka',
+              prices: [{label:'Slice', price:'₹150'},{label:'Half loaf', price:'₹280'}],
+              choiceText: 'Choose Dark Chocolate Babka'
+            },
+            {
+              emoji: '🧁',
+              color: 'linear-gradient(135deg,#E8C77E,#C08A2E)',
+              title: 'Fresh Cupcakes',
+              prices: [{label:'Single', price:'₹65'},{label:'Box of 4', price:'₹230'}],
+              choiceText: 'Choose Fresh Cupcakes'
+            }
+          ]);
+        } else if (/choose/i.test(text)) {
+          addMessage('Great 👍 What size would you like?', 'bot');
+          addQuickReplies(['Small', 'Medium', 'Large']);
+        } else if (/hour/i.test(text)) {
+          addMessage("We're open Tue–Sun, 7:00 AM to 2:00 PM. Closed Mondays.", 'bot');
+        } else {
+          addMessage("Got it! Once this is connected to n8n, I'll answer that for real. Try asking about \"today's cakes\".", 'bot');
+        }
+        sendBtn.disabled = false;
+      }, 700);
+      return;
+    }
+
+    try {
+      const res = await fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: getSessionId(),
+          message: text,
+          source: 'marigold-website'
+        })
+      });
+
+      if(!res.ok) throw new Error('Bad response: ' + res.status);
+      const data = await res.json();
+      typingEl.remove();
+
+      // n8n's "Respond to Webhook" node can return any combination of:
+      //   { "reply": "text" }
+      //   { "reply": "text", "cards": [{ image, title, prices, choiceText }] }
+      //   { "reply": "text", "quickReplies": ["Small", "Medium", "Large"] }
+      addMessage(data.reply || "Sorry, I didn't catch that — could you rephrase?", 'bot');
+      if (Array.isArray(data.cards) && data.cards.length) addCards(data.cards);
+      if (Array.isArray(data.quickReplies) && data.quickReplies.length) addQuickReplies(data.quickReplies);
+
+    } catch (err) {
+      typingEl.remove();
+      addMessage("I'm having trouble connecting right now. Please try again in a moment.", 'bot');
+      console.error(err);
+    } finally {
+      sendBtn.disabled = false;
+    }
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if(!text) return;
+    input.value = '';
+    sendMessage(text);
+  });
+</script>
+
+</body>
+</html>
